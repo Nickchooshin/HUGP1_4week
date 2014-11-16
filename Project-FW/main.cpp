@@ -24,7 +24,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 
 	g_SceneManager->StartScene(TitleScene::scene()) ;
 
-	WinSystem.WinSet("Stardust Crusaders(スタ─ダスト クルセイダ─ス) - 0.1v", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 607, 1080) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
+	WinSystem.WinSet("Stardust Crusaders(スタ─ダスト クルセイダ─ス) - 0.1v", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 576, 768) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
 	WinSystem.WinMsg() ;
 	WinSystem.WinEnd() ;
 

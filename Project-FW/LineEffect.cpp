@@ -4,7 +4,7 @@
 #include "D3dDevice.h"
 
 CLineEffect::CLineEffect() : m_Direction(NONE),
-							 m_fSpeed(0.0f),
+							 m_fSpeed(0.0f), m_fScale(1.0f),
 							 m_bLife(false)
 {
 }
@@ -23,26 +23,29 @@ void CLineEffect::Init()
 
 	m_Direction = (DIRECTION)(rand() % 4 + 1) ;
 	m_fSpeed = (rand()%5+1) * 4.0f + 8.0f ;
+	m_fScale = rand()%3 * 0.5f + 1.0f ;
+	m_fTexSizeHalf = 50 * m_fScale ;
+	m_pSprite->SetScale(m_fScale, 1.0f) ;
 
 	switch(m_Direction)
 	{
 	case UP :
 		m_fX = rand() % WinWidth ;
-		m_fY = -50.0f ;
+		m_fY = -m_fTexSizeHalf ;
 		break ;
 
 	case DOWN :
 		m_fX = rand() % WinWidth ;
-		m_fY = (float)WinHeight + 50.0f ;
+		m_fY = (float)WinHeight + m_fTexSizeHalf ;
 		break ;
 
 	case RIGHT :
-		m_fX = -50.0f ;
+		m_fX = -m_fTexSizeHalf ;
 		m_fY = rand() % WinHeight ;
 		break ;
 
 	case LEFT :
-		m_fX = (float)WinWidth + 50.0f ;
+		m_fX = (float)WinWidth + m_fTexSizeHalf ;
 		m_fY = rand() % WinHeight ;
 		break ;
 	}
@@ -75,8 +78,8 @@ void CLineEffect::Update()
 		break ;
 	}
 
-	if( (m_fX < -50.0f) || (m_fX > WinWidth + 50.0f) ||
-		(m_fY < -50.0f) || (m_fY > WinHeight + 50.0f) )
+	if( (m_fX < -m_fTexSizeHalf) || (m_fX > WinWidth + m_fTexSizeHalf) ||
+		(m_fY < -m_fTexSizeHalf) || (m_fY > WinHeight + m_fTexSizeHalf) )
 		m_bLife = false ;
 }
 
