@@ -3,20 +3,17 @@
 #include "Scene.h"
 
 class CSprite ;
-class CButton ;
 
-class TitleScene : public Scene
+class GameScene : public Scene
 {
 private :
 	CSprite *m_pBackground ;
-	CSprite *m_pTitle ;
-	CButton *m_pStartButton, *m_pExitButton ;
 
 public :
 	static Scene* scene() ;
 
-	TitleScene() ;
-	virtual ~TitleScene() ;
+	GameScene() ;
+	virtual ~GameScene() ;
 
 	void Init() ;
 	void Destroy() ;

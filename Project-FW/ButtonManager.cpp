@@ -38,7 +38,8 @@ void CButtonManager::DeleteAllButtons()
 	for(int i=0; i<num; i++)
 		delete m_ButtonList[i] ;
 
-	m_ButtonList.clear() ;
+	if(!m_ButtonList.empty())
+		m_ButtonList.clear() ;
 }
 
 void CButtonManager::Update()

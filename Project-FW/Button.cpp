@@ -9,12 +9,12 @@
 CButton::CButton() : m_fX(0.0f), m_fY(0.0f),
 					 m_fWidth(0.0f), m_fHeight(0.0f),
 					 m_nState(0), m_nPrevState(-1),
-					 m_bActivate(true), m_bClick(false),
+					 m_bActivate(true), m_bClick(false), m_bPuton(false), m_bPutonActivate(false),
 					 m_bVisible(true),
 					 m_pSprite(NULL),
 					 m_pClickDown(NULL), m_pClickUp(NULL)
 {
-	for(int i=0; i<3; i++)
+	for(int i=0; i<4; i++)
 		m_nIndex[i] = 0 ;
 }
 CButton::~CButton()
@@ -54,11 +54,12 @@ void CButton::SetPosition(float fX, float fY)
 	m_fY = fY ;
 }
 
-void CButton::SetIndex(int normalIndex, int clickIndex, int disableIndex)
+void CButton::SetIndex(int normalIndex, int putonIndex, int clickIndex, int disableIndex)
 {
 	m_nIndex[0] = normalIndex ;
-	m_nIndex[1] = clickIndex ;
-	m_nIndex[2] = disableIndex ;
+	m_nIndex[1] = putonIndex ;
+	m_nIndex[2] = clickIndex ;
+	m_nIndex[3] = disableIndex ;
 }
 
 void CButton::SetActivate(bool bActivate)
@@ -71,9 +72,15 @@ void CButton::SetVisible(bool bVisible)
 	m_bVisible = bVisible ;
 }
 
+void CButton::SetPutonActivate(bool bActivate)
+{
+	m_bPutonActivate = bActivate ;
+}
+
 void CButton::ClickState(int x, int y, bool bClick, bool bPress)
 {
 	m_bClick = false ;
+	m_bPuton = false ;
 	if(!m_bActivate || !m_bVisible)
 		return ;
 
@@ -84,9 +91,14 @@ void CButton::ClickState(int x, int y, bool bClick, bool bPress)
 	}
 	else if(bClick && CollisionCheck(x, y))
 	{
-		if(m_nState!=m_nIndex[1])
+		if(m_nState!=m_nIndex[2])
 			g_MusicManager->PlayMusic(m_pClickUp, 1) ;
+		m_nState = m_nIndex[2] ;
+	}
+	else if(m_bPutonActivate && CollisionCheck(x, y))
+	{
 		m_nState = m_nIndex[1] ;
+		m_bPuton = true ;
 	}
 	else
 	{
@@ -97,6 +109,11 @@ void CButton::ClickState(int x, int y, bool bClick, bool bPress)
 const bool CButton::BeClick() const
 {
 	return m_bClick ;
+}
+
+const bool CButton::BePuton() const
+{
+	return m_bPuton ;
 }
 
 const bool CButton::BeActivate() const
@@ -115,7 +132,7 @@ void CButton::Render()
 		return ;
 
 	if(!m_bActivate)
-		m_nState = m_nIndex[2] ;
+		m_nState = m_nIndex[3] ;
 
 	if(m_nState!=m_nPrevState)
 	{

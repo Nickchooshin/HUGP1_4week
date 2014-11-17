@@ -62,6 +62,15 @@
     <ClCompile Include="StageScene.cpp">
       <Filter>Scene\StageScene</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Objects\Planet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -131,6 +140,15 @@
     <ClInclude Include="StageScene.h">
       <Filter>Scene\StageScene</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Objects\Planet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -177,6 +195,12 @@
     </Filter>
     <Filter Include="Scene\StageScene">
       <UniqueIdentifier>{2e229232-df2a-4e0d-b934-82cc8e6a8c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GameScene">
+      <UniqueIdentifier>{713dda30-7f65-4a69-a382-1d2c7ad11f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Planet">
+      <UniqueIdentifier>{8c268772-a938-422b-a843-9261f4145f5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
