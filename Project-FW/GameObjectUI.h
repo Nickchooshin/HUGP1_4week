@@ -4,13 +4,16 @@ class CSprite ;
 class CButton ;
 class CNumberUI ;
 
+class CBarrierButtonUI ;
+
 class CGameObjectUI
 {
 private :
+	int m_nBarrierType[4], m_nBarrierNum[4] ;
+
 	CSprite *m_pStageNumber ;
 	CButton *m_pOperateButton ;
-	CButton *m_pBarrierButton[5] ;
-	CNumberUI *m_pBarrierNum[5] ;
+	CBarrierButtonUI *m_pBarrierButtonUI[4] ;
 
 public :
 	CGameObjectUI() ;
@@ -23,4 +26,6 @@ public :
 	void Update() ;
 
 	void Render() ;
+private :
+	void LoadBarrierDat() ;
 } ;

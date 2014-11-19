@@ -83,6 +83,9 @@
     <ClCompile Include="NumberUI.cpp">
       <Filter>UI\Number</Filter>
     </ClCompile>
+    <ClCompile Include="BarrierButtonUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="NumberUI.h">
       <Filter>UI\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="BarrierButtonUI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
