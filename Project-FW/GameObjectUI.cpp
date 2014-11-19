@@ -6,21 +6,25 @@
 #include "NumberUI.h"
 #include "BarrierButtonUI.h"
 
+#include "Mouse.h"
+
 #include "ButtonManager.h"
 #include "MapManager.h"
 
-CGameObjectUI::CGameObjectUI() : m_pStageNumber(NULL),
+CGameObjectUI::CGameObjectUI() : m_nSelectedType(0), m_nSelectedIndex(-1),
+								 m_bMapGrid(false),
+								 m_pSelectedBarrier(NULL),
+								 m_pMapGrid(NULL),
+								 m_pStageNumber(NULL),
 								 m_pOperateButton(NULL)
 {
 	for(int i=0; i<4; i++)
-	{
-		m_nBarrierType[i] = 0 ;
-		m_nBarrierNum[i] = 0 ;
 		m_pBarrierButtonUI[i] = NULL ;
-	}
 }
 CGameObjectUI::~CGameObjectUI()
 {
+	if(m_pMapGrid!=NULL)
+		delete m_pMapGrid ;
 	if(m_pStageNumber!=NULL)
 		delete m_pStageNumber ;
 	if(m_pOperateButton!=NULL)
@@ -38,9 +42,12 @@ void CGameObjectUI::Init()
 	float WinWidth = g_D3dDevice->GetWinWidth() ;
 	float WinHeight = g_D3dDevice->GetWinHeight() ;
 	char filepath[100] ;
-	
+	int BarrierType[4], BarrierNum[4] ;
 
-	LoadBarrierDat() ;
+	LoadBarrierDat(BarrierType, BarrierNum) ;
+
+	m_pMapGrid = new CSprite ;
+	m_pMapGrid->Init("Resource/Image/Game/Game_map_grid.png") ;
 
 	wsprintf(filepath, "Resource/Image/Game/UI/Game_stg_%02d.png", g_MapManager->GetMapNumber()) ;
 	m_pStageNumber = new CSprite ;
@@ -56,7 +63,7 @@ void CGameObjectUI::Init()
 	for(int i=0; i<4; i++)
 	{
 		m_pBarrierButtonUI[i] = new CBarrierButtonUI ;
-		m_pBarrierButtonUI[i]->Init(m_nBarrierType[i], m_nBarrierNum[i]) ;
+		m_pBarrierButtonUI[i]->Init(BarrierType[i], BarrierNum[i]) ;
 		m_pBarrierButtonUI[i]->SetPosition(72.0f + (i * 144.0f), WinHeight - 737.0f) ;
 	}
 }
@@ -64,20 +71,63 @@ void CGameObjectUI::Init()
 void CGameObjectUI::Update()
 {
 	for(int i=0; i<4; i++)
+	{
 		m_pBarrierButtonUI[i]->Update() ;
+
+		if(m_pBarrierButtonUI[i]->BeClick())
+		{
+			m_nSelectedType = m_pBarrierButtonUI[i]->GetType() ;
+			m_nSelectedIndex = i ;
+			m_pSelectedBarrier = m_pBarrierButtonUI[i]->GetSelectedSprite() ;
+		}
+	}
+
+	if(g_Mouse->IsMousePress(g_Mouse->RBUTTON_DOWN))
+		ClearSelectedBarrier() ;
+
+	if(m_nSelectedType!=0)
+	{
+		float x = g_Mouse->GetMousePoint().x ;
+		float y = g_Mouse->GetMousePoint().y ;
+		float IndexPosX, IndexPosY ;
+
+		m_pSelectedBarrier->SetPosition(x, y) ;
+
+		m_bMapGrid = g_MapManager->InMapArea(x, y, IndexPosX, IndexPosY) ;
+
+		if(m_bMapGrid)
+		{
+			m_pMapGrid->SetPosition(IndexPosX, IndexPosY) ;
+
+			if(g_Mouse->IsMousePress(g_Mouse->LBUTTON_DOWN))
+			{
+				if(g_MapManager->BuildBarrier(m_nSelectedType, IndexPosX, IndexPosY))
+				{
+					m_pBarrierButtonUI[m_nSelectedIndex]->SubBarrierNum() ;
+					ClearSelectedBarrier() ;
+				}
+			}
+		}
+	}
 }
 
 void CGameObjectUI::Render()
 {
+	if(m_nSelectedType!=0 && m_bMapGrid)
+		m_pMapGrid->Render() ;
+
 	m_pStageNumber->Render() ;
 
 	m_pOperateButton->Render() ;
 
 	for(int i=0; i<4; i++)
 		m_pBarrierButtonUI[i]->Render() ;
+
+	if(m_nSelectedType!=0)
+		m_pSelectedBarrier->Render() ;
 }
 
-void CGameObjectUI::LoadBarrierDat()
+void CGameObjectUI::LoadBarrierDat(int *BarrierType, int *BarrierNum)
 {
 	FILE *BarrierDat ;
 	char filepath[100] ;
@@ -95,7 +145,14 @@ void CGameObjectUI::LoadBarrierDat()
 	}
 
 	for(int i=0; i<4; i++)
-		fscanf(BarrierDat, "%d %d\n", &m_nBarrierType[i], &m_nBarrierNum[i]) ;
+		fscanf(BarrierDat, "%d %d\n", &BarrierType[i], &BarrierNum[i]) ;
 
 	fclose(BarrierDat) ;
+}
+
+void CGameObjectUI::ClearSelectedBarrier()
+{
+	m_nSelectedType = 0 ;
+	m_nSelectedIndex = -1 ;
+	m_pSelectedBarrier = NULL ;
 }

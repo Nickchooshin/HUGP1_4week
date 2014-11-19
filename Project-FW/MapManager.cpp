@@ -38,14 +38,14 @@ void CMapManager::SetMapNumber(int num)
 	m_nMapNumber = num ;
 }
 
-void CMapManager::SetBarrier(CBarrier *pBarrier, int IndexX, int IndexY)
+bool CMapManager::SetBarrier(CBarrier *pBarrier, int IndexX, int IndexY)
 {
 	if(m_nMap[IndexX][IndexY]!=0)
-		return ;
+		return false ;
 
 	int i ;
 	const int num = pBarrier->GetBarrierAreaNum() ;
-	POSITION *pArea ;
+	const POSITION *pArea = pBarrier->GetBarrierArea() ;
 
 	for(i=0; i<num; i++)
 	{
@@ -60,6 +60,33 @@ void CMapManager::SetBarrier(CBarrier *pBarrier, int IndexX, int IndexY)
 	}
 
 	m_nMap[IndexX][IndexY] = -1 ;
+
+	m_BarrierList.push_back(pBarrier) ;
+
+	return true ;
+}
+
+bool CMapManager::BuildBarrier(int Type, float IndexPosX, float IndexPosY)
+{
+	CBarrier *pBarrier ;
+	int IndexX, IndexY ;
+	const int MapIndex = (m_nMapSize/3)-1 ;
+
+	IndexX = (int)(IndexPosX - m_fMapStartXY[MapIndex][0]) / (int)(m_fMapSpace[MapIndex]) ;
+	IndexY = (int)(IndexPosY - m_fMapStartXY[MapIndex][1]) / (int)(m_fMapSpace[MapIndex]) ;
+	IndexY = (m_nMapSize-1) - IndexY ;
+
+	pBarrier = new CBarrier ;
+	pBarrier->Init(Type) ;
+	pBarrier->SetPosition(IndexPosX, IndexPosY) ;
+
+	if(!SetBarrier(pBarrier, IndexX, IndexY))
+	{
+		delete pBarrier ;
+		return false ;
+	}
+
+	return true ;
 }
 
 const int CMapManager::GetMapSize() const
@@ -70,6 +97,43 @@ const int CMapManager::GetMapSize() const
 const int CMapManager::GetMapNumber() const
 {
 	return m_nMapNumber ;
+}
+
+const bool CMapManager::InMapArea(float x, float y, float &IndexPosX, float &IndexPosY) const
+{
+	const int MapIndex = (m_nMapSize/3)-1 ;
+	const float Space = m_fMapSpace[MapIndex] ;
+
+	float MinX, MinY ;
+	float MaxX, MaxY ;
+
+	MinX = m_fMapStartXY[MapIndex][0] - (Space / 2.0f) ;
+	MinY = m_fMapStartXY[MapIndex][1] - (Space / 2.0f) ;
+	MaxX = MinX + (Space * (m_nMapSize)) ;
+	MaxY = MinY + (Space * (m_nMapSize)) ;
+
+	if( (x>=MinX && x<=MaxX) && (y>=MinY && y<=MaxY) )
+	{
+		for(int i=0; i<m_nMapSize; i++)
+		{
+			for(int j=0; j<m_nMapSize; j++)
+			{
+				float X1 = MinX + (Space * j) ;
+				float Y1 = MinY + (Space * i) ;
+				float X2 = X1 + Space ;
+				float Y2 = Y1 + Space ;
+
+				if( (x>=X1 && x<=X2) && (y>=Y1 && y<=Y2) )
+				{
+					IndexPosX = (X1 + X2) / 2.0f ;
+					IndexPosY = (Y1 + Y2) / 2.0f ;
+					return true ;
+				}
+			}
+		}
+	}
+
+	return false ;
 }
 
 void CMapManager::LoadMapData()
@@ -129,20 +193,47 @@ void CMapManager::ClearMap()
 		}
 	}
 
-	const int num = m_PlanetList.size() ;
-
+	int num ;
+	
+	num = m_PlanetList.size() ;
 	for(i=0; i<num; i++)
 		delete m_PlanetList[i] ;
 
 	if(num!=0)
 		m_PlanetList.clear() ;
+
+	num = m_BarrierList.size() ;
+	for(i=0; i<num; i++)
+		delete m_BarrierList[i] ;
+
+	if(num!=0)
+		m_BarrierList.clear() ;
+}
+
+void CMapManager::Update()
+{
+	int i ;
+	int num ;
+
+	num = m_PlanetList.size() ;
+	for(i=0; i<num; i++)
+		m_PlanetList[i]->Update() ;
+
+	num = m_BarrierList.size() ;
+	for(i=0; i<num; i++)
+		m_BarrierList[i]->Update() ;
 }
 
 void CMapManager::Render()
 {
 	int i ;
-	const int num = m_PlanetList.size() ;
+	int num ;
 
+	num = m_PlanetList.size() ;
 	for(i=0; i<num; i++)
 		m_PlanetList[i]->Render() ;
+
+	num = m_BarrierList.size() ;
+	for(i=0; i<num; i++)
+		m_BarrierList[i]->Render() ;
 }

@@ -14,11 +14,25 @@ class CBarrier : public CObjects
 protected :
 	POSITION *m_pBarrierArea ;
 	int m_nBarrierAreaNum ;
+	int m_nType ;
+
+	int m_nNowFrame ;
+	float m_fAnimationTime ;
+
+	enum State { BUILD=0, WAIT } ;
+	State m_State, m_prevState ;
 
 public :
 	CBarrier() ;
-	virtual ~CBarrier() ;
+	~CBarrier() ;
+
+	void Init() ;
+	void Init(int Type) ;
 
 	const POSITION* GetBarrierArea() const ;
 	const int GetBarrierAreaNum() const ;
+
+	void Update() ;
+private :
+	void Animation() ;
 } ;

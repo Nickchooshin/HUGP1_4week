@@ -15,20 +15,25 @@ private :
 	float m_fMapStartXY[3][2] ;
 	float m_fMapSpace[3] ;
 	std::vector<CPlanet*> m_PlanetList ;
+	std::vector<CBarrier*> m_BarrierList ;
 
 public :
 	CMapManager() ;
 	~CMapManager() ;
 
 	void SetMapNumber(int num) ;
-	void SetBarrier(CBarrier *pBarrier, int IndexX, int IndexY) ;
+	bool SetBarrier(CBarrier *pBarrier, int IndexX, int IndexY) ;
+	bool BuildBarrier(int Type, float IndexPosX, float IndexPosY) ;
 
 	const int GetMapSize() const ;
 	const int GetMapNumber() const ;
+	const bool InMapArea(float x, float y, float &IndexPosX, float &IndexPosY) const ;
 
 	void LoadMapData() ;
 
 	void ClearMap() ;
+
+	void Update() ;
 
 	void Render() ;
 } ;

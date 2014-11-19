@@ -76,6 +76,8 @@ void GameScene::Update(float dt)
 
 	g_ButtonManager->Update() ;
 
+	g_MapManager->Update() ;
+
 	m_pGameObjectUI->Update() ;
 }
 

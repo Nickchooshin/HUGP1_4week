@@ -9,7 +9,10 @@ class CBarrierButtonUI ;
 class CGameObjectUI
 {
 private :
-	int m_nBarrierType[4], m_nBarrierNum[4] ;
+	int m_nSelectedType, m_nSelectedIndex ;
+	bool m_bMapGrid ;
+	CSprite *m_pSelectedBarrier ;
+	CSprite *m_pMapGrid ;
 
 	CSprite *m_pStageNumber ;
 	CButton *m_pOperateButton ;
@@ -27,5 +30,6 @@ public :
 
 	void Render() ;
 private :
-	void LoadBarrierDat() ;
+	void LoadBarrierDat(int *BarrierType, int *BarrierNum) ;
+	void ClearSelectedBarrier() ;
 } ;
