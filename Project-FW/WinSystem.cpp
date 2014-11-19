@@ -161,6 +161,10 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		//g_InputManager->SetMousePoint(mouse) ;
 		g_Mouse->SetMousePoint(LOWORD(lParam), HIWORD(lParam)) ;
 		return 0 ;
+	case WM_SETCURSOR :
+		SetCursor(NULL) ;
+		g_D3dDevice->GetDevice()->ShowCursor(true) ;
+		return 0 ;
 	case WM_DESTROY :
 		//	Cleanup();
 		PostQuitMessage( 0 ) ;

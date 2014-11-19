@@ -80,6 +80,11 @@ HRESULT CD3dSystem::InitD3d(const HINSTANCE hInst, const HWND hWnd, const int nW
 
 	SetRenderState() ;
 
+	// Mouse Cursor
+	LPDIRECT3DSURFACE9 surfcursor ;
+	g_TextureManager->GetTexture("Resource/Image/Mouse.png", NULL)->GetSurfaceLevel(0, &surfcursor) ;
+	m_pd3dDevice->SetCursorProperties(0, 0, surfcursor) ;
+
 	return S_OK;
 }
 

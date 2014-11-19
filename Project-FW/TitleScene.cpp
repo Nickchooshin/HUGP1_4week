@@ -1,6 +1,6 @@
 #include "TitleScene.h"
 
-#include "GameScene.h"
+#include "StageScene.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -47,23 +47,23 @@ void TitleScene::Init()
 	g_CameraManager->AddCamera(new CCamera(), 0) ;
 
 	m_pBackground = new CSprite ;
-	m_pBackground->Init("Resource/Image/Title/Main_Background.jpg") ;
+	m_pBackground->Init("Resource/Image/Title/Main_bg.jpg") ;
 	m_pBackground->SetPosition(WinWidth / 2.0f, WinHeight / 2.0f) ;
 
 	m_pTitle = new CSprite ;
-	m_pTitle->Init(430.0f, 30.0f, "Resource/Image/Title/Main_Title.png") ;
+	m_pTitle->Init(430.0f, 30.0f, "Resource/Image/Title/Main_title.png") ;
 	m_pTitle->SetPosition(288.0f, WinHeight - 134.0f) ;
 	m_pTitle->SetTextureUV(0.0f, 0.0f, 430.0f, 30.0f) ;
 
 	m_pStartButton = new CButton ;
-	m_pStartButton->Init(234.0f, 64.0f, "Resource/Image/Title/Start_Button.png") ;
+	m_pStartButton->Init(234.0f, 64.0f, "Resource/Image/Title/Main_btn_start.png") ;
 	m_pStartButton->SetPosition(288.0f, WinHeight - 570.0f) ;
 	m_pStartButton->SetIndex(0, 1, 0, 0) ;
 	m_pStartButton->SetPutonActivate(true) ;
 	g_ButtonManager->AddButton(m_pStartButton) ;
 
 	m_pExitButton = new CButton ;
-	m_pExitButton->Init(234.0f, 64.0f, "Resource/Image/Title/Exit_Button.png") ;
+	m_pExitButton->Init(234.0f, 64.0f, "Resource/Image/Title/Main_btn_exit.png") ;
 	m_pExitButton->SetPosition(288.0f, WinHeight - 670.0f) ;
 	m_pExitButton->SetIndex(0, 1, 0, 0) ;
 	m_pExitButton->SetPutonActivate(true) ;
@@ -87,7 +87,7 @@ void TitleScene::Update(float dt)
 
 	if(m_pStartButton->BeClick())
 	{
-		g_SceneManager->ChangeScene(GameScene::scene()) ;
+		g_SceneManager->ChangeScene(StageScene::scene()) ;
 		return ;
 	}
 	else if(m_pExitButton->BeClick())

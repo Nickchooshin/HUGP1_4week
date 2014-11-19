@@ -9,16 +9,21 @@
 
 #include "D3dDevice.h"
 #include "Sprite.h"
+#include "GameObjectUI.h"
 
+#include "ButtonManager.h"
 #include "MapManager.h"
 
-GameScene::GameScene() : m_pBackground(NULL)
+GameScene::GameScene() : m_pBackground(NULL),
+						 m_pGameObjectUI(NULL)
 {
 }
 GameScene::~GameScene()
 {
 	if(m_pBackground!=NULL)
 		delete m_pBackground ;
+	if(m_pGameObjectUI!=NULL)
+		delete m_pGameObjectUI ;
 }
 
 Scene* GameScene::scene()
@@ -35,12 +40,27 @@ void GameScene::Init()
 
 	g_CameraManager->AddCamera(new CCamera(), 0) ;
 
+	g_MapManager->LoadMapData() ;
+
 	m_pBackground = new CSprite ;
-	m_pBackground->Init("Resource/Image/Title/Main_01.jpg") ;
+	switch(g_MapManager->GetMapSize())
+	{
+	case 3 :
+		m_pBackground->Init("Resource/Image/Game/game_bg_S.png") ;
+		break ;
+
+	case 6 :
+		m_pBackground->Init("Resource/Image/Game/game_bg_M.png") ;
+		break ;
+
+	case 9 :
+		m_pBackground->Init("Resource/Image/Game/game_bg_L.png") ;
+		break ;
+	}
 	m_pBackground->SetPosition(WinWidth / 2.0f, WinHeight / 2.0f) ;
 
-	g_MapManager->SetMapNumber(1) ;
-	g_MapManager->LoadMapData() ;
+	m_pGameObjectUI = new CGameObjectUI ;
+	m_pGameObjectUI->Init() ;
 }
 
 void GameScene::Destroy()
@@ -53,11 +73,19 @@ void GameScene::Update(float dt)
 	g_Mouse->Update() ;
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
+
+	g_ButtonManager->Update() ;
+
+	m_pGameObjectUI->Update() ;
 }
 
 void GameScene::Render()
 {
 	g_CameraManager->CameraRun() ;
 
-	//m_pBackground->Render() ;
+	m_pBackground->Render() ;
+
+	g_MapManager->Render() ;
+
+	m_pGameObjectUI->Render() ;
 }

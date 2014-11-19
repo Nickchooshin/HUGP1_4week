@@ -71,6 +71,18 @@
     <ClCompile Include="Planet.cpp">
       <Filter>Objects\Planet</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>Objects\Barrier</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberUI.cpp">
+      <Filter>UI\Number</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -149,6 +161,18 @@
     <ClInclude Include="Planet.h">
       <Filter>Objects\Planet</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>Objects\Barrier</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberUI.h">
+      <Filter>UI\Number</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -201,6 +225,15 @@
     </Filter>
     <Filter Include="Objects\Planet">
       <UniqueIdentifier>{8c268772-a938-422b-a843-9261f4145f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{bb45062e-fe66-4561-a104-d766233ffaf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Barrier">
+      <UniqueIdentifier>{b3416b80-d41a-412b-a29d-a6aeab5c7201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Number">
+      <UniqueIdentifier>{81f1aa29-295b-4adf-882e-b423e03bf204}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

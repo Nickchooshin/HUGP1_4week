@@ -80,11 +80,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
+    <ClCompile Include="GameObjectUI.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="Joystick.cpp" />
@@ -95,10 +97,12 @@
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MusicManager.cpp" />
+    <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StageScene.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -106,12 +110,14 @@
     <ClCompile Include="WinSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Barrier.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
+    <ClInclude Include="GameObjectUI.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="Joystick.h" />
@@ -121,12 +127,14 @@
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MusicManager.h" />
+    <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="StageScene.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TitleScene.h" />
