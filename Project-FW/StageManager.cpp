@@ -44,5 +44,8 @@ void CStageManager::SaveStageDat()
 void CStageManager::OpenStage(int StageNum)
 {
 	if(StageNum>m_nOpenStageNum)
+	{
 		m_nOpenStageNum = StageNum ;
+		SaveStageDat() ;
+	}
 }

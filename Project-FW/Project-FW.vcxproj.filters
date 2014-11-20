@@ -95,6 +95,9 @@
     <ClCompile Include="CreditScene.cpp">
       <Filter>Scene\CreditScene</Filter>
     </ClCompile>
+    <ClCompile Include="TutorialScene.cpp">
+      <Filter>Scene\TutorialScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -197,6 +200,9 @@
     <ClInclude Include="CreditScene.h">
       <Filter>Scene\CreditScene</Filter>
     </ClInclude>
+    <ClInclude Include="TutorialScene.h">
+      <Filter>Scene\TutorialScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -261,6 +267,9 @@
     </Filter>
     <Filter Include="Scene\CreditScene">
       <UniqueIdentifier>{e1e64102-23ee-4423-afdb-b9cc3317b703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TutorialScene">
+      <UniqueIdentifier>{569bf19f-2de1-4cbc-a420-4f5607cb7322}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

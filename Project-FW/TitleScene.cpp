@@ -19,7 +19,8 @@
 
 TitleScene::TitleScene() : m_pBackground(NULL),
 						   m_pTitle(NULL),
-						   m_pStartButton(NULL), m_pExitButton(NULL)
+						   m_pStartButton(NULL), m_pExitButton(NULL),
+						   m_pBGM(NULL)
 {
 }
 TitleScene::~TitleScene()
@@ -70,10 +71,14 @@ void TitleScene::Init()
 	m_pExitButton->SetIndex(0, 1, 0, 0) ;
 	m_pExitButton->SetPutonActivate(true) ;
 	g_ButtonManager->AddButton(m_pExitButton) ;
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-01.mp3", true) ;
+	g_MusicManager->PlayMusic(m_pBGM, 0) ;
 }
 
 void TitleScene::Destroy()
 {
+	g_MusicManager->StopMusic(0) ;
 }
 
 void TitleScene::Update(float dt)

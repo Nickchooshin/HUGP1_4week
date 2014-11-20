@@ -2,6 +2,7 @@
 
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "TutorialScene.h"
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -127,7 +128,10 @@ void StageScene::Update(float dt)
 
 	if(m_pNextButton->BeClick())
 	{
-		g_SceneManager->ChangeScene(GameScene::scene()) ;
+		if(g_MapManager->GetMapNumber()==0)
+			g_SceneManager->ChangeScene(TutorialScene::scene()) ;
+		else
+			g_SceneManager->ChangeScene(GameScene::scene()) ;
 		return ;
 	}
 	else if(m_pPrevButton->BeClick())
