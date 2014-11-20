@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "StageScene.h"
 #include "GameScene.h"
+#include "CreditScene.h"
 
 CResultUI::CResultUI() : m_nResult(0),
 						 m_pBackground(NULL),
@@ -124,6 +125,7 @@ void CResultUI::Update()
 	{
 		if(m_nResult==3 && m_pFinishButton->BeClick())
 		{
+			g_SceneManager->ChangeScene(CreditScene::scene()) ;
 			return ;
 		}
 		else if(m_nResult==1 && m_pNextStageButton->BeClick())

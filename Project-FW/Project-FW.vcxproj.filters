@@ -92,6 +92,9 @@
     <ClCompile Include="ResultUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="CreditScene.cpp">
+      <Filter>Scene\CreditScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -191,6 +194,9 @@
     <ClInclude Include="ResultUI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="CreditScene.h">
+      <Filter>Scene\CreditScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -252,6 +258,9 @@
     </Filter>
     <Filter Include="UI\Number">
       <UniqueIdentifier>{81f1aa29-295b-4adf-882e-b423e03bf204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\CreditScene">
+      <UniqueIdentifier>{e1e64102-23ee-4423-afdb-b9cc3317b703}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

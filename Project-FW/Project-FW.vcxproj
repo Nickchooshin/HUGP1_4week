@@ -87,6 +87,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="D3dSystem.cpp" />
+    <ClCompile Include="CreditScene.cpp" />
     <ClCompile Include="GameObjectUI.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputDevice.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="D3dSystem.h" />
     <ClInclude Include="D3dDevice.h" />
+    <ClInclude Include="CreditScene.h" />
     <ClInclude Include="GameObjectUI.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputDevice.h" />

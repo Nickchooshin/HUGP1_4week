@@ -13,6 +13,7 @@
 #include "WinSystem.h"
 #include "SceneManager.h"
 #include "TitleScene.h"
+#include "CreditScene.h"
 
 INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 {
@@ -22,7 +23,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 #endif
 	CWinSystem WinSystem(hInst) ;
 
-	g_SceneManager->StartScene(TitleScene::scene()) ;
+	g_SceneManager->StartScene(CreditScene::scene()) ;
 
 	WinSystem.WinSet("Stardust Crusaders - 0.1v", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 576, 768) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
 	WinSystem.WinMsg() ;
