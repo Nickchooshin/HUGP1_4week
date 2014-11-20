@@ -18,11 +18,14 @@ private :
 	CButton *m_pOperateButton ;
 	CBarrierButtonUI *m_pBarrierButtonUI[4] ;
 
+	float m_fObjectScale ;
+
 public :
 	CGameObjectUI() ;
 	~CGameObjectUI() ;
 
 	void Init() ;
+	void InitScale() ;
 
 	void SetPosition(float fX, float fY) ;
 

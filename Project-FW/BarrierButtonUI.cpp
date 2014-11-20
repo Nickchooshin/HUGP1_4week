@@ -62,6 +62,11 @@ void CBarrierButtonUI::SetPosition(float fX, float fY)
 	m_pNumberUI->SetPosition(fX + 36.0f, fY) ;
 }
 
+void CBarrierButtonUI::SetActivate(bool bActivate)
+{
+	m_pButton->SetActivate(bActivate) ;
+}
+
 void CBarrierButtonUI::SubBarrierNum()
 {
 	--m_nNum ;

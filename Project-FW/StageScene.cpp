@@ -33,6 +33,10 @@ StageScene::~StageScene()
 {
 	if(m_pBackground!=NULL)
 		delete m_pBackground ;
+	if(m_pNextButton!=NULL)
+		g_ButtonManager->DeleteButton(m_pNextButton) ;
+	if(m_pPrevButton!=NULL)
+		g_ButtonManager->DeleteButton(m_pPrevButton) ;
 	if(m_pStageSelect!=NULL)
 		delete m_pStageSelect ;
 
@@ -41,8 +45,6 @@ StageScene::~StageScene()
 		if(m_pStageNumber[i]!=NULL)
 			delete m_pStageNumber[i] ;
 	}
-
-	g_ButtonManager->DeleteAllButtons() ;
 }
 
 Scene* StageScene::scene()

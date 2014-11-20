@@ -6,6 +6,7 @@ class CPlanet : public CObjects
 {
 protected :
 	int m_nProtectLevel ;
+	POSITION m_MapIndex ;
 
 	int m_nNowFrame ;
 	float m_fAnimationTime ;
@@ -19,6 +20,12 @@ public :
 
 	void Init() ;
 	void Init(int ProtectLevel) ;
+
+	void SetMapIndex(POSITION MapIndex) ;
+	void Destroy() ;
+
+	const int GetProtectLevel() const ;
+	const POSITION GetMapIndex() const ;
 
 	void Update() ;
 private :

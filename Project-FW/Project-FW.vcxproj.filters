@@ -86,6 +86,12 @@
     <ClCompile Include="BarrierButtonUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Meteor.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -177,6 +183,12 @@
       <Filter>UI\Number</Filter>
     </ClInclude>
     <ClInclude Include="BarrierButtonUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Meteor.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultUI.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

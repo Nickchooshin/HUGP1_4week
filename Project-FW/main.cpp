@@ -18,13 +18,13 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 {
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF) ;
-	//_CrtSetBreakAlloc(219) ;
+	//_CrtSetBreakAlloc(469) ;
 #endif
 	CWinSystem WinSystem(hInst) ;
 
 	g_SceneManager->StartScene(TitleScene::scene()) ;
 
-	WinSystem.WinSet("Stardust Crusaders(スタ─ダスト クルセイダ─ス) - 0.1v", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 576, 768) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
+	WinSystem.WinSet("Stardust Crusaders - 0.1v", WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX, 576, 768) ;	// WS_THICKFRAME - 윈도우창 늘리기/줄이기 크기조정 지원안함.
 	WinSystem.WinMsg() ;
 	WinSystem.WinEnd() ;
 

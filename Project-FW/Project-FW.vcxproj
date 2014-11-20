@@ -96,11 +96,13 @@
     <ClCompile Include="LineEffectManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MusicManager.cpp" />
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="ResultUI.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageManager.cpp" />
@@ -127,11 +129,13 @@
     <ClInclude Include="LineEffect.h" />
     <ClInclude Include="LineEffectManager.h" />
     <ClInclude Include="MapManager.h" />
+    <ClInclude Include="Meteor.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MusicManager.h" />
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Planet.h" />
+    <ClInclude Include="ResultUI.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />

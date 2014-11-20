@@ -21,6 +21,8 @@ void CPlanet::Init()
 	m_pSprite = new CSprite ;
 	m_pSprite->Init(80.0f, 140.0f, "Resource/Image/Game/Game_pln.png") ;
 	m_pSprite->SetTextureUV(0.0f, 140.0f * (m_nProtectLevel-1), 80.0f, 140.0f * m_nProtectLevel) ;
+
+	InitScale() ;
 }
 
 void CPlanet::Init(int ProtectLevel)
@@ -28,6 +30,26 @@ void CPlanet::Init(int ProtectLevel)
 	m_nProtectLevel = ProtectLevel ;
 
 	Init() ;
+}
+
+void CPlanet::SetMapIndex(POSITION MapIndex)
+{
+	m_MapIndex = MapIndex ;
+}
+
+void CPlanet::Destroy()
+{
+	m_State = DESTROY ;
+}
+
+const int CPlanet::GetProtectLevel() const
+{
+	return m_nProtectLevel ;
+}
+
+const POSITION CPlanet::GetMapIndex() const
+{
+	return m_MapIndex ;
 }
 
 void CPlanet::Update()
@@ -48,7 +70,7 @@ void CPlanet::Animation()
 		break ;
 
 	case DESTROY :
-		Index = 4 ;
+		Index = 3 ;
 		MaxFrame = 1 ;
 		break ;
 	}

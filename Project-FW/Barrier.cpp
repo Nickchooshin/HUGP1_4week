@@ -3,16 +3,20 @@
 
 #include "D3dDevice.h"
 
-CBarrier::CBarrier() : m_pBarrierArea(0),
+CBarrier::CBarrier() : m_pActivate(NULL),
+					   m_pBarrierArea(0),
 					   m_nBarrierAreaNum(NULL),
 					   m_nType(0),
-					   m_nNowFrame(0),
-					   m_fAnimationTime(0.0f),
+					   m_bActivate(false),
+					   m_nNowFrame(0), m_nNowFrame_A(0),
+					   m_fAnimationTime(0.0f), m_fAnimationTime_A(0.0f),
 					   m_State(BUILD), m_prevState(BUILD)
 {
 }
 CBarrier::~CBarrier()
 {
+	if(m_pActivate!=NULL)
+		delete m_pActivate ;
 	if(m_pBarrierArea!=NULL)
 		delete m_pBarrierArea ;
 }
@@ -22,6 +26,12 @@ void CBarrier::Init()
 	m_pSprite = new CSprite() ;
 	m_pSprite->Init(80.0f, 123.0f, "Resource/Image/Game/Game_bar.png") ;
 	m_pSprite->SetTextureUV(0.0f, 123.0f * 5.0f, 80.0f, 123.0f * 6.0f) ;
+
+	m_pActivate = new CSprite ;
+	m_pActivate->Init(80.0f, 80.0f, "Resource/Image/Game/Game_bar_activate.png") ;
+	m_pActivate->SetTextureUV(0.0f, 0.0f, 80.0f, 80.0f) ;
+
+	InitScale() ;
 }
 
 void CBarrier::Init(int Type)
@@ -107,6 +117,11 @@ void CBarrier::Init(int Type)
 	Init() ;
 }
 
+void CBarrier::Activate()
+{
+	m_bActivate = true ;
+}
+
 const POSITION* CBarrier::GetBarrierArea() const
 {
 	return m_pBarrierArea ;
@@ -120,6 +135,9 @@ const int CBarrier::GetBarrierAreaNum() const
 void CBarrier::Update()
 {
 	Animation() ;
+
+	if(m_State==WAIT && m_bActivate)
+		Animation_Activate() ;
 }
 
 void CBarrier::Animation()
@@ -168,4 +186,49 @@ void CBarrier::Animation()
 	}
 
 	m_prevState = m_State ;
+}
+
+void CBarrier::Animation_Activate()
+{
+	const int MaxFrame = 4 ;
+
+	m_fAnimationTime_A += g_D3dDevice->GetTime() ;
+
+	if(m_fAnimationTime_A>=0.1f)
+	{
+		if(m_State!=m_prevState)
+		{
+			m_nNowFrame_A = 0 ;
+			m_fAnimationTime_A = 0.0f ;
+		}
+
+		float left, top, right, bottom ;
+		left = (float)(m_nNowFrame_A * 80.0f) ;
+		top = 0.0f ;
+		right = (float)(left + 80.0f) ;
+		bottom = 80.0f ;
+
+		m_pActivate->SetTextureUV(left, top, right, bottom) ;
+
+		int Frame = (int)(m_fAnimationTime_A / 0.1f) ;
+		m_fAnimationTime_A -= Frame * 0.1f ;
+		Frame %= MaxFrame ;
+		m_nNowFrame_A += Frame ;
+		if(m_nNowFrame_A>=MaxFrame)
+			m_nNowFrame_A = 0 ;
+	}
+}
+
+void CBarrier::Render()
+{
+	if(m_State==WAIT && m_bActivate)
+	{
+		m_pActivate->SetPosition(m_fX, m_fY) ;
+		m_pActivate->SetScale(m_fScale, m_fScale) ;
+		m_pActivate->Render() ;
+	}
+
+	m_pSprite->SetPosition(m_fX, m_fY) ;
+	m_pSprite->SetScale(m_fScale, m_fScale) ;
+	m_pSprite->Render() ;
 }

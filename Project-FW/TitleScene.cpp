@@ -28,8 +28,10 @@ TitleScene::~TitleScene()
 		delete m_pBackground ;
 	if(m_pTitle!=NULL)
 		delete m_pTitle ;
-
-	g_ButtonManager->DeleteAllButtons() ;
+	if(m_pStartButton!=NULL)
+		g_ButtonManager->DeleteButton(m_pStartButton) ;
+	if(m_pExitButton!=NULL)
+		g_ButtonManager->DeleteButton(m_pExitButton) ; 
 }
 
 Scene* TitleScene::scene()

@@ -24,6 +24,8 @@ GameScene::~GameScene()
 		delete m_pBackground ;
 	if(m_pGameObjectUI!=NULL)
 		delete m_pGameObjectUI ;
+	
+	g_MapManager->ClearMap() ;
 }
 
 Scene* GameScene::scene()
@@ -39,7 +41,8 @@ void GameScene::Init()
 	float WinHeight = g_D3dDevice->GetWinHeight() ;
 
 	g_CameraManager->AddCamera(new CCamera(), 0) ;
-
+	
+	g_MapManager->Init() ;
 	g_MapManager->LoadMapData() ;
 
 	m_pBackground = new CSprite ;
@@ -76,9 +79,11 @@ void GameScene::Update(float dt)
 
 	g_ButtonManager->Update() ;
 
+	m_pGameObjectUI->Update() ;
+
 	g_MapManager->Update() ;
 
-	m_pGameObjectUI->Update() ;
+	//m_pGameObjectUI->Update() ;
 }
 
 void GameScene::Render()
@@ -88,6 +93,8 @@ void GameScene::Render()
 	m_pBackground->Render() ;
 
 	g_MapManager->Render() ;
-
+	
 	m_pGameObjectUI->Render() ;
+
+	g_MapManager->Render_Result() ;
 }

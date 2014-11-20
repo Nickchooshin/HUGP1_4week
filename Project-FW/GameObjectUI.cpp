@@ -16,7 +16,8 @@ CGameObjectUI::CGameObjectUI() : m_nSelectedType(0), m_nSelectedIndex(-1),
 								 m_pSelectedBarrier(NULL),
 								 m_pMapGrid(NULL),
 								 m_pStageNumber(NULL),
-								 m_pOperateButton(NULL)
+								 m_pOperateButton(NULL),
+								 m_fObjectScale(1.0f)
 {
 	for(int i=0; i<4; i++)
 		m_pBarrierButtonUI[i] = NULL ;
@@ -66,6 +67,26 @@ void CGameObjectUI::Init()
 		m_pBarrierButtonUI[i]->Init(BarrierType[i], BarrierNum[i]) ;
 		m_pBarrierButtonUI[i]->SetPosition(72.0f + (i * 144.0f), WinHeight - 737.0f) ;
 	}
+
+	InitScale() ;
+}
+
+void CGameObjectUI::InitScale()
+{
+	switch(g_MapManager->GetMapSize())
+	{
+	case 3 :
+		m_fObjectScale = 1.0f ;
+		break ;
+
+	case 6 :
+		m_fObjectScale = 0.5f ;
+		break ;
+
+	case 9 :
+		m_fObjectScale = 0.3375f ;
+		break ;
+	}
 }
 
 void CGameObjectUI::Update()
@@ -109,12 +130,25 @@ void CGameObjectUI::Update()
 			}
 		}
 	}
+
+	//
+
+	if(m_pOperateButton->BeClick())
+	{
+		for(int i=0; i<4; i++)
+			m_pBarrierButtonUI[i]->SetActivate(false) ;
+		m_pOperateButton->SetActivate(false) ;
+		g_MapManager->Operate() ;
+	}
 }
 
 void CGameObjectUI::Render()
 {
 	if(m_nSelectedType!=0 && m_bMapGrid)
+	{
+		m_pMapGrid->SetScale(m_fObjectScale, m_fObjectScale) ;
 		m_pMapGrid->Render() ;
+	}
 
 	m_pStageNumber->Render() ;
 
@@ -124,7 +158,10 @@ void CGameObjectUI::Render()
 		m_pBarrierButtonUI[i]->Render() ;
 
 	if(m_nSelectedType!=0)
+	{
+		m_pSelectedBarrier->SetScale(m_fObjectScale, m_fObjectScale) ;
 		m_pSelectedBarrier->Render() ;
+	}
 }
 
 void CGameObjectUI::LoadBarrierDat(int *BarrierType, int *BarrierNum)

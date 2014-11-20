@@ -22,6 +22,7 @@ public :
 	void Init(int Type, int Num) ;
 
 	void SetPosition(float fX, float fY) ;
+	void SetActivate(bool bActivate) ;
 	void SubBarrierNum() ;
 	
 	const int GetType() const ;

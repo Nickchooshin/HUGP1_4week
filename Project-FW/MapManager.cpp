@@ -5,9 +5,17 @@
 
 #include "Barrier.h"
 #include "Planet.h"
+#include "Meteor.h"
+#include "ResultUI.h"
+
+#include "StageManager.h"
 
 CMapManager::CMapManager() : m_nMapNumber(0),
-							 m_nMapSize(0)
+							 m_nMapSize(0),
+							 m_bOperate(false), m_bResult(false),
+							 m_bClear(false),
+							 m_pMeteor(NULL),
+							 m_pResultUI(NULL)
 {
 	int i, j ;
 
@@ -27,9 +35,20 @@ CMapManager::CMapManager() : m_nMapNumber(0),
 	m_fMapSpace[0] = 136.0f ;
 	m_fMapSpace[1] = 68.0f ;
 	m_fMapSpace[2] = 46.0f ;
+
+	m_pMeteor = new CMeteor() ;
+	m_pMeteor->Init() ;
+
+	m_pResultUI = new CResultUI() ;
+	m_pResultUI->Init() ;
 }
 CMapManager::~CMapManager()
 {
+	if(m_pMeteor!=NULL)
+		delete m_pMeteor ;
+	if(m_pResultUI!=NULL)
+		delete m_pResultUI ;
+
 	ClearMap() ;
 }
 
@@ -56,7 +75,7 @@ bool CMapManager::SetBarrier(CBarrier *pBarrier, int IndexX, int IndexY)
 			(y<0 || y>m_nMapSize) )
 			continue ;
 
-		m_nMapBarrier[pArea[i].x][pArea[i].y] += 1 ;
+		m_nMapBarrier[x][y] += 1 ;
 	}
 
 	m_nMap[IndexX][IndexY] = -1 ;
@@ -87,6 +106,20 @@ bool CMapManager::BuildBarrier(int Type, float IndexPosX, float IndexPosY)
 	}
 
 	return true ;
+}
+
+void CMapManager::Operate()
+{
+	int i ;
+	int num ;
+
+	m_bOperate = true ;
+
+	num = m_BarrierList.size() ;
+	for(i=0; i<num; i++)
+		m_BarrierList[i]->Activate() ;
+
+	m_pMeteor->InitMeteor() ;
 }
 
 const int CMapManager::GetMapSize() const
@@ -172,6 +205,7 @@ void CMapManager::LoadMapData()
 				CPlanet *pPlanet = new CPlanet ;
 				pPlanet->Init(m_nMap[j][i]) ;
 				pPlanet->SetPosition(StartX + (j * MapSpace), WinHeight - (StartY + (i * MapSpace))) ;
+				pPlanet->SetMapIndex(POSITION(j, i)) ;
 				m_PlanetList.push_back(pPlanet) ;
 			}
 		}
@@ -210,6 +244,17 @@ void CMapManager::ClearMap()
 		m_BarrierList.clear() ;
 }
 
+void CMapManager::Init()
+{
+	ClearMap() ;
+
+	m_bOperate = false ;
+	m_bResult = false ;
+	m_bClear = false ;
+
+	m_pResultUI->InitValue() ;
+}
+
 void CMapManager::Update()
 {
 	int i ;
@@ -222,6 +267,34 @@ void CMapManager::Update()
 	num = m_BarrierList.size() ;
 	for(i=0; i<num; i++)
 		m_BarrierList[i]->Update() ;
+
+	if(m_bResult)
+	{
+		m_pResultUI->Update() ;
+	}
+	else if(m_bOperate)
+	{
+		m_pMeteor->Update() ;
+
+		if(!m_pMeteor->BeMeteor())
+		{
+			m_bResult = true ;
+			DestroyPlanet() ;
+
+			if(m_bClear)
+			{
+				if(m_nMapNumber==19)
+					m_pResultUI->SetResult(3) ;
+				else
+				{
+					g_StageManager->OpenStage(m_nMapNumber+1) ;
+					m_pResultUI->SetResult(1) ;
+				}
+			}
+			else
+				m_pResultUI->SetResult(2) ;
+		}
+	}
 }
 
 void CMapManager::Render()
@@ -231,9 +304,45 @@ void CMapManager::Render()
 
 	num = m_PlanetList.size() ;
 	for(i=0; i<num; i++)
+	{
 		m_PlanetList[i]->Render() ;
+	}
 
 	num = m_BarrierList.size() ;
 	for(i=0; i<num; i++)
 		m_BarrierList[i]->Render() ;
+
+	/*if(m_bResult)
+		m_pResultUI->Render() ;
+	else if(m_bOperate)
+		m_pMeteor->Render() ;*/
+	if(!m_bResult && m_bOperate)
+		m_pMeteor->Render() ;
+}
+
+void CMapManager::Render_Result()
+{
+	if(m_bResult)
+		m_pResultUI->Render() ;
+}
+
+void CMapManager::DestroyPlanet()
+{
+	int i ;
+	const int num = m_PlanetList.size() ;
+
+	m_bClear = true ;
+
+	for(i=0; i<num; i++)
+	{
+		POSITION MapIndex = m_PlanetList[i]->GetMapIndex() ;
+		int Barrier = m_nMapBarrier[MapIndex.x][MapIndex.y] ;
+		int ProtectLevel = m_PlanetList[i]->GetProtectLevel() ;
+
+		if(Barrier < ProtectLevel)
+		{
+			m_PlanetList[i]->Destroy() ;
+			m_bClear = false ;
+		}
+	}
 }
