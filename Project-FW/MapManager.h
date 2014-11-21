@@ -35,6 +35,7 @@ public :
 
 	const int GetMapSize() const ;
 	const int GetMapNumber() const ;
+	const int GetMapBarrierLevel(int x, int y) const ;
 	const bool InMapArea(float x, float y, float &IndexPosX, float &IndexPosY) const ;
 
 	void LoadMapData() ;

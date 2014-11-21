@@ -132,6 +132,11 @@ const int CMapManager::GetMapNumber() const
 	return m_nMapNumber ;
 }
 
+const int CMapManager::GetMapBarrierLevel(int x, int y) const
+{
+	return m_nMapBarrier[x][y] ;
+}
+
 const bool CMapManager::InMapArea(float x, float y, float &IndexPosX, float &IndexPosY) const
 {
 	const int MapIndex = (m_nMapSize/3)-1 ;
@@ -304,18 +309,16 @@ void CMapManager::Render()
 
 	num = m_PlanetList.size() ;
 	for(i=0; i<num; i++)
-	{
 		m_PlanetList[i]->Render() ;
-	}
 
 	num = m_BarrierList.size() ;
 	for(i=0; i<num; i++)
 		m_BarrierList[i]->Render() ;
 
-	/*if(m_bResult)
-		m_pResultUI->Render() ;
-	else if(m_bOperate)
-		m_pMeteor->Render() ;*/
+	num = m_PlanetList.size() ;
+	for(i=0; i<num; i++)
+		m_PlanetList[i]->Render_Info() ;
+
 	if(!m_bResult && m_bOperate)
 		m_pMeteor->Render() ;
 }

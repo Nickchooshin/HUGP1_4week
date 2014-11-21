@@ -2,9 +2,15 @@
 
 #include "Objects.h"
 
+class CButton ;
+
 class CPlanet : public CObjects
 {
 protected :
+	CSprite *m_pInfo ;
+	CButton *m_pInfoButton ;
+
+	bool m_bInfo ;
 	int m_nProtectLevel ;
 	POSITION m_MapIndex ;
 
@@ -21,6 +27,7 @@ public :
 	void Init() ;
 	void Init(int ProtectLevel) ;
 
+	void SetPosition(float fX, float fY) ;
 	void SetMapIndex(POSITION MapIndex) ;
 	void Destroy() ;
 
@@ -28,6 +35,10 @@ public :
 	const POSITION GetMapIndex() const ;
 
 	void Update() ;
+
+	void Render() ;
+	void Render_Info() ;
 private :
+	void SetInfoIndex() ;
 	void Animation() ;
 } ;

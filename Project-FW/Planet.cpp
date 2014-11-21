@@ -1,10 +1,15 @@
 #include "Planet.h"
 #include "Sprite.h"
+#include "Button.h"
 #include "MapManager.h"
 
 #include "D3dDevice.h"
+#include "ButtonManager.h"
 
-CPlanet::CPlanet() : m_nProtectLevel(0),
+CPlanet::CPlanet() : m_pInfo(NULL),
+					 m_pInfoButton(NULL),
+					 m_bInfo(false),
+					 m_nProtectLevel(0),
 					 m_nNowFrame(0),
 					 m_fAnimationTime(0.0f),
 					 m_State(WAIT), m_prevState(WAIT)
@@ -12,6 +17,10 @@ CPlanet::CPlanet() : m_nProtectLevel(0),
 }
 CPlanet::~CPlanet()
 {
+	if(m_pInfo!=NULL)
+		delete m_pInfo ;
+	if(m_pInfoButton!=NULL)
+		g_ButtonManager->DeleteButton(m_pInfoButton) ;
 }
 
 void CPlanet::Init()
@@ -22,6 +31,16 @@ void CPlanet::Init()
 	m_pSprite->Init(80.0f, 140.0f, "Resource/Image/Game/Game_pln.png") ;
 	m_pSprite->SetTextureUV(0.0f, 140.0f * (m_nProtectLevel-1), 80.0f, 140.0f * m_nProtectLevel) ;
 
+	m_pInfo = new CSprite ;
+	m_pInfo->Init(100.0f, 60.0f, "Resource/Image/Game/Game_pln_info.png") ;
+	m_pInfo->SetTextureUV(0.0f, 0.0f, 100.0f, 60.0f) ;
+
+	m_pInfoButton = new CButton ;
+	m_pInfoButton->Init(80.0f * m_fScale, 140.0f * m_fScale, "Resource/Image/Black.png") ;
+	m_pInfoButton->SetIndex(0, 0, 0, 0) ;
+	m_pInfoButton->SetPutonActivate(true) ;
+	g_ButtonManager->AddButton(m_pInfoButton) ;
+
 	InitScale() ;
 }
 
@@ -30,6 +49,14 @@ void CPlanet::Init(int ProtectLevel)
 	m_nProtectLevel = ProtectLevel ;
 
 	Init() ;
+}
+
+void CPlanet::SetPosition(float fX, float fY)
+{
+	m_fX = fX ;
+	m_fY = fY ;
+
+	m_pInfoButton->SetPosition(m_fX, m_fY) ;
 }
 
 void CPlanet::SetMapIndex(POSITION MapIndex)
@@ -54,7 +81,37 @@ const POSITION CPlanet::GetMapIndex() const
 
 void CPlanet::Update()
 {
+	m_bInfo = m_pInfoButton->BePuton() ;
+
 	Animation() ;
+}
+
+void CPlanet::Render()
+{
+	m_pSprite->SetPosition(m_fX, m_fY) ;
+	m_pSprite->SetScale(m_fScale, m_fScale) ;
+	m_pSprite->Render() ;
+}
+
+void CPlanet::Render_Info()
+{
+	if(!m_bInfo)
+		return ;
+	
+	SetInfoIndex() ;
+	m_pInfo->SetPosition(m_fX, m_fY + 77.0f) ;
+	m_pInfo->Render() ;
+}
+
+void CPlanet::SetInfoIndex()
+{
+	int BarrierLevel = g_MapManager->GetMapBarrierLevel(m_MapIndex.x, m_MapIndex.y) ;
+	int InfoIndex = m_nProtectLevel - BarrierLevel ;
+
+	if(InfoIndex<0)
+		InfoIndex = 0 ;
+
+	m_pInfo->SetTextureUV(100.0f * InfoIndex, 0.0f, 100.0f * (InfoIndex+1), 60.0f) ;
 }
 
 void CPlanet::Animation()
