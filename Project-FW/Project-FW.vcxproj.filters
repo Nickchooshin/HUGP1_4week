@@ -98,6 +98,9 @@
     <ClCompile Include="TutorialScene.cpp">
       <Filter>Scene\TutorialScene</Filter>
     </ClCompile>
+    <ClCompile Include="StageStartUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h" />
@@ -204,6 +207,9 @@
       <Filter>Scene\TutorialScene</Filter>
     </ClInclude>
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="StageStartUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">

@@ -108,6 +108,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StageScene.cpp" />
+    <ClCompile Include="StageStartUI.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TutorialScene.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StageScene.h" />
+    <ClInclude Include="StageStartUI.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TutorialScene.h" />

@@ -5,12 +5,14 @@
 
 class CSprite ;
 class CGameObjectUI ;
+class CStageStartUI ;
 
 class GameScene : public Scene
 {
 private :
 	CSprite *m_pBackground ;
 	CGameObjectUI *m_pGameObjectUI ;
+	CStageStartUI *m_pStageStartUI ;
 
 	FMOD::Sound *m_pBGM ;
 

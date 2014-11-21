@@ -10,12 +10,14 @@
 #include "D3dDevice.h"
 #include "Sprite.h"
 #include "GameObjectUI.h"
+#include "StageStartUI.h"
 
 #include "ButtonManager.h"
 #include "MapManager.h"
 
 GameScene::GameScene() : m_pBackground(NULL),
 						 m_pGameObjectUI(NULL),
+						 m_pStageStartUI(NULL),
 						 m_pBGM(NULL)
 {
 }
@@ -25,6 +27,8 @@ GameScene::~GameScene()
 		delete m_pBackground ;
 	if(m_pGameObjectUI!=NULL)
 		delete m_pGameObjectUI ;
+	if(m_pStageStartUI!=NULL)
+		delete m_pStageStartUI ;
 	
 	g_MapManager->ClearMap() ;
 }
@@ -66,6 +70,9 @@ void GameScene::Init()
 	m_pGameObjectUI = new CGameObjectUI ;
 	m_pGameObjectUI->Init() ;
 
+	m_pStageStartUI = new CStageStartUI ;
+	m_pStageStartUI->Init() ;
+
 	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-03.mp3", true) ;
 	g_MusicManager->PlayMusic(m_pBGM, 0) ;
 }
@@ -82,13 +89,18 @@ void GameScene::Update(float dt)
 	g_Joystick->Update() ;
 	g_MusicManager->Loop() ;
 
-	g_ButtonManager->Update() ;
+	if(m_pStageStartUI->BeStageStartEnd())
+	{
+		g_ButtonManager->Update() ;
 
-	m_pGameObjectUI->Update() ;
+		m_pGameObjectUI->Update() ;
 
-	g_MapManager->Update() ;
+		g_MapManager->Update() ;
 
-	//m_pGameObjectUI->Update() ;
+		//m_pGameObjectUI->Update() ;
+	}
+	else
+		m_pStageStartUI->Update() ;
 }
 
 void GameScene::Render()
@@ -102,4 +114,7 @@ void GameScene::Render()
 	m_pGameObjectUI->Render() ;
 
 	g_MapManager->Render_Result() ;
+
+	if(!m_pStageStartUI->BeStageStartEnd())
+		m_pStageStartUI->Render() ;
 }
