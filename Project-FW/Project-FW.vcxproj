@@ -138,6 +138,7 @@
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Planet.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="ResultUI.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -150,6 +151,9 @@
     <ClInclude Include="TutorialScene.h" />
     <ClInclude Include="UISprite.h" />
     <ClInclude Include="WinSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project-FW1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

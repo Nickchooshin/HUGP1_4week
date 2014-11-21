@@ -19,7 +19,8 @@ CreditScene::CreditScene() : m_pBackground(NULL),
 							 m_fY(0.0f), m_fYMax(0.0f),
 							 m_nState(0),
 							 m_fTime(0.0f),
-							 m_bReturnTitle(false)
+							 m_bReturnTitle(false),
+							 m_pBGM(NULL)
 {
 }
 CreditScene::~CreditScene()
@@ -61,10 +62,14 @@ void CreditScene::Init()
 	m_pBlack->Init("Resource/Image/Black.png") ;
 	m_pBlack->SetPosition(WinWidth / 2.0f, WinHeight / 2.0f) ;
 	m_pBlack->SetAlpha(0) ;
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-05.mp3", true) ;
+	g_MusicManager->PlayMusic(m_pBGM, 0) ;
 }
 
 void CreditScene::Destroy()
 {
+	g_MusicManager->StopMusic(0) ;
 }
 
 void CreditScene::Update(float dt)

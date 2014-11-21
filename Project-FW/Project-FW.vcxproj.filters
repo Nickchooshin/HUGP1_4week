@@ -203,6 +203,7 @@
     <ClInclude Include="TutorialScene.h">
       <Filter>Scene\TutorialScene</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Input">
@@ -271,5 +272,8 @@
     <Filter Include="Scene\TutorialScene">
       <UniqueIdentifier>{569bf19f-2de1-4cbc-a420-4f5607cb7322}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project-FW1.rc" />
   </ItemGroup>
 </Project>

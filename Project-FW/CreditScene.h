@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include <fmod.hpp>
 
 class CSprite ;
 
@@ -15,6 +16,8 @@ private :
 	int m_nState ;
 	float m_fTime ;
 	bool m_bReturnTitle ;
+
+	FMOD::Sound *m_pBGM ;
 
 public :
 	static Scene* scene() ;

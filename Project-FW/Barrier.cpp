@@ -86,7 +86,7 @@ void CBarrier::Init(int Type)
 		for(i=0; i<9; i++)
 		{
 			m_pBarrierArea[i].x = i % 3 -1 ;
-			m_pBarrierArea[i].y = i / 3 ;
+			m_pBarrierArea[i].y = i / 3 - 1 ;
 		}
 	}
 	else if(m_nType==5)

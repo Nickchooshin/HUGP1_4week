@@ -16,7 +16,8 @@
 #include "MapManager.h"
 #include "StageManager.h"
 
-TutorialScene::TutorialScene() : m_nSceneNum(0)
+TutorialScene::TutorialScene() : m_nSceneNum(0),
+								 m_pBGM(NULL)
 {
 	for(int i=0; i<7; i++)
 		m_pTutorial[i] = NULL ;
@@ -52,10 +53,14 @@ void TutorialScene::Init()
 		m_pTutorial[i]->Init(filepath) ;
 		m_pTutorial[i]->SetPosition(WinWidth / 2.0f, WinHeight / 2.0f) ;
 	}
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-03.mp3", true) ;
+	g_MusicManager->PlayMusic(m_pBGM, 0) ;
 }
 
 void TutorialScene::Destroy()
 {
+	g_MusicManager->StopMusic(0) ;
 }
 
 void TutorialScene::Update(float dt)

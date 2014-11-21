@@ -7,6 +7,8 @@
 #include "ButtonManager.h"
 #include "MapManager.h"
 #include "SceneManager.h"
+#include "MusicManager.h"
+
 #include "StageScene.h"
 #include "GameScene.h"
 #include "CreditScene.h"
@@ -19,7 +21,8 @@ CResultUI::CResultUI() : m_nResult(0),
 						 m_pRetryButton(NULL),
 						 m_pStageSelectButton(NULL),
 						 m_fTime(0.0f),
-						 m_nState(0)
+						 m_nState(0),
+						 m_pBGM(NULL)
 {
 }
 CResultUI::~CResultUI()
@@ -78,6 +81,8 @@ void CResultUI::Init()
 	m_pStageSelectButton->SetIndex(0, 1, 0, 0) ;
 	m_pStageSelectButton->SetPutonActivate(true) ;
 	g_ButtonManager->AddButton(m_pStageSelectButton) ;
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-04.mp3", true) ;
 }
 
 void CResultUI::InitValue()
@@ -118,6 +123,9 @@ void CResultUI::Update()
 			{
 				m_nState = 2 ;
 				m_fTime = 0.0f ;
+
+				g_MusicManager->StopMusic(0) ;
+				g_MusicManager->PlayMusic(m_pBGM, 0) ;
 			}
 		}
 	}

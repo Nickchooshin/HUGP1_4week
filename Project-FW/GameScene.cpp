@@ -15,7 +15,8 @@
 #include "MapManager.h"
 
 GameScene::GameScene() : m_pBackground(NULL),
-						 m_pGameObjectUI(NULL)
+						 m_pGameObjectUI(NULL),
+						 m_pBGM(NULL)
 {
 }
 GameScene::~GameScene()
@@ -64,10 +65,14 @@ void GameScene::Init()
 
 	m_pGameObjectUI = new CGameObjectUI ;
 	m_pGameObjectUI->Init() ;
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-03.mp3", true) ;
+	g_MusicManager->PlayMusic(m_pBGM, 0) ;
 }
 
 void GameScene::Destroy()
 {
+	g_MusicManager->StopMusic(0) ;
 }
 
 void GameScene::Update(float dt)

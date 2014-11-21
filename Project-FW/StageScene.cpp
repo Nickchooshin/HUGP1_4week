@@ -22,7 +22,8 @@
 
 StageScene::StageScene() : m_pBackground(NULL),
 						   m_pNextButton(NULL), m_pPrevButton(NULL),
-						   m_pStageSelect(NULL)
+						   m_pStageSelect(NULL),
+						   m_pBGM(NULL)
 {
 	for(int i=0; i<20; i++)
 	{
@@ -111,10 +112,14 @@ void StageScene::Init()
 		if(i==MapNumber)
 			m_pStageSelect->SetPosition(x, y) ;
 	}
+
+	m_pBGM = g_MusicManager->LoadMusic("Resource/Sound/BGM-02.mp3", true) ;
+	g_MusicManager->PlayMusic(m_pBGM, 0) ;
 }
 
 void StageScene::Destroy()
 {
+	g_MusicManager->StopMusic(0) ;
 }
 
 void StageScene::Update(float dt)

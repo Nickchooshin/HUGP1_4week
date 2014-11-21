@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fmod.hpp>
+
 class CSprite ;
 class CButton ;
 
@@ -13,6 +15,8 @@ private :
 
 	float m_fTime ;
 	int m_nState ;
+
+	FMOD::Sound *m_pBGM ;
 
 public :
 	CResultUI() ;
