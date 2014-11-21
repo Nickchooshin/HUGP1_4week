@@ -120,6 +120,7 @@ void CMapManager::Operate()
 		m_BarrierList[i]->Activate() ;
 
 	m_pMeteor->InitMeteor() ;
+	Deactivate() ;
 }
 
 const int CMapManager::GetMapSize() const
@@ -348,4 +349,13 @@ void CMapManager::DestroyPlanet()
 			m_bClear = false ;
 		}
 	}
+}
+
+void CMapManager::Deactivate()
+{
+	int i ;
+	const int num = m_PlanetList.size() ;
+
+	for(i=0; i<num; i++)
+		m_PlanetList[i]->Deactivate() ;
 }

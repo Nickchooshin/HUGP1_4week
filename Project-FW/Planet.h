@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects.h"
+#include <fmod.hpp>
 
 class CButton ;
 
@@ -20,6 +21,8 @@ protected :
 	enum State { WAIT=0, DESTROY } ;
 	State m_State, m_prevState ;
 
+	FMOD::Sound *m_pDestroy ;
+
 public :
 	CPlanet() ;
 	~CPlanet() ;
@@ -30,6 +33,7 @@ public :
 	void SetPosition(float fX, float fY) ;
 	void SetMapIndex(POSITION MapIndex) ;
 	void Destroy() ;
+	void Deactivate() ;
 
 	const int GetProtectLevel() const ;
 	const POSITION GetMapIndex() const ;

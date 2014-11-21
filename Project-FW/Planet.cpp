@@ -5,6 +5,7 @@
 
 #include "D3dDevice.h"
 #include "ButtonManager.h"
+#include "MusicManager.h"
 
 CPlanet::CPlanet() : m_pInfo(NULL),
 					 m_pInfoButton(NULL),
@@ -12,7 +13,8 @@ CPlanet::CPlanet() : m_pInfo(NULL),
 					 m_nProtectLevel(0),
 					 m_nNowFrame(0),
 					 m_fAnimationTime(0.0f),
-					 m_State(WAIT), m_prevState(WAIT)
+					 m_State(WAIT), m_prevState(WAIT),
+					 m_pDestroy(NULL)
 {
 }
 CPlanet::~CPlanet()
@@ -37,9 +39,12 @@ void CPlanet::Init()
 
 	m_pInfoButton = new CButton ;
 	m_pInfoButton->Init(80.0f * m_fScale, 140.0f * m_fScale, "Resource/Image/Black.png") ;
-	m_pInfoButton->SetIndex(0, 0, 0, 0) ;
+	m_pInfoButton->SetIndex(0, 1, 0, 0) ;
 	m_pInfoButton->SetPutonActivate(true) ;
+	m_pInfoButton->SetPutonSound("Resource/Sound/SE_click.mp3") ;
 	g_ButtonManager->AddButton(m_pInfoButton) ;
+
+	m_pDestroy = g_MusicManager->LoadMusic("Resource/Sound/SE_destroy.mp3", false, false) ;
 
 	InitScale() ;
 }
@@ -67,6 +72,13 @@ void CPlanet::SetMapIndex(POSITION MapIndex)
 void CPlanet::Destroy()
 {
 	m_State = DESTROY ;
+
+	g_MusicManager->PlayMusic(m_pDestroy, 1) ;
+}
+
+void CPlanet::Deactivate()
+{
+	m_pInfoButton->SetActivate(false) ;
 }
 
 const int CPlanet::GetProtectLevel() const

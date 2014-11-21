@@ -2,10 +2,12 @@
 #include "Sprite.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
 CMeteor::CMeteor() : m_bMeteor(true),
 					 m_nNowFrame(0),
-					 m_fAnimationTime(0.0f)
+					 m_fAnimationTime(0.0f),
+					 m_pMeteor(NULL)
 {
 }
 CMeteor::~CMeteor()
@@ -17,12 +19,16 @@ void CMeteor::Init()
 	m_pSprite = new CSprite ;
 	m_pSprite->Init(430.0f, 360.0f, "Resource/Image/Game/Game_opr_meteor.png") ;
 	m_pSprite->SetTextureUV(0.0f, 0.0f, 430.0f, 360.0f) ;
+
+	m_pMeteor = g_MusicManager->LoadMusic("Resource/Sound/SE_meteor.mp3", false, false) ;
 }
 
 void CMeteor::InitMeteor()
 {
 	SetPosition(g_D3dDevice->GetWinWidth() + 430.0f, g_D3dDevice->GetWinHeight() + 360.0f) ;
 	m_bMeteor = true ;
+
+	g_MusicManager->PlayMusic(m_pMeteor, 1) ;
 }
 
 const bool CMeteor::BeMeteor() const

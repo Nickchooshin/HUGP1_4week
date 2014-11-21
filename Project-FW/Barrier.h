@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects.h"
+#include <fmod.hpp>
 
 class CSprite ;
 
@@ -18,6 +19,8 @@ protected :
 
 	enum State { BUILD=0, WAIT } ;
 	State m_State, m_prevState ;
+
+	FMOD::Sound *m_pSBuild, *m_pSActivate ;
 
 public :
 	CBarrier() ;

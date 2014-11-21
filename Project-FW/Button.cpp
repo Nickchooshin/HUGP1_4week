@@ -12,7 +12,7 @@ CButton::CButton() : m_fX(0.0f), m_fY(0.0f),
 					 m_bActivate(true), m_bClick(false), m_bPuton(false), m_bPutonActivate(false),
 					 m_bVisible(true),
 					 m_pSprite(NULL),
-					 m_pClickDown(NULL), m_pClickUp(NULL)
+					 m_pClickDown(NULL), m_pClickUp(NULL), m_pPuton(NULL)
 {
 	for(int i=0; i<4; i++)
 		m_nIndex[i] = 0 ;
@@ -77,6 +77,21 @@ void CButton::SetPutonActivate(bool bActivate)
 	m_bPutonActivate = bActivate ;
 }
 
+void CButton::SetClickDownSound(char *filepath)
+{
+	m_pClickDown = g_MusicManager->LoadMusic(filepath, false, false) ;
+}
+
+void CButton::SetClickUpSound(char *filepath)
+{
+	m_pClickUp = g_MusicManager->LoadMusic(filepath, false, false) ;
+}
+
+void CButton::SetPutonSound(char *filepath)
+{
+	m_pPuton = g_MusicManager->LoadMusic(filepath, false, false) ;
+}
+
 void CButton::ClickState(int x, int y, bool bClick, bool bPress)
 {
 	m_bClick = false ;
@@ -86,17 +101,20 @@ void CButton::ClickState(int x, int y, bool bClick, bool bPress)
 
 	if(bPress && CollisionCheck(x, y))
 	{
-		g_MusicManager->PlayMusic(m_pClickDown, 1) ;
+		if(m_pClickDown!=NULL)
+			g_MusicManager->PlayMusic(m_pClickDown, 1) ;
 		m_bClick = true ;
 	}
 	else if(bClick && CollisionCheck(x, y))
 	{
-		if(m_nState!=m_nIndex[2])
+		if(m_nState!=m_nIndex[2] && m_pClickUp!=NULL)
 			g_MusicManager->PlayMusic(m_pClickUp, 1) ;
 		m_nState = m_nIndex[2] ;
 	}
 	else if(m_bPutonActivate && CollisionCheck(x, y))
 	{
+		if(m_nState!=m_nIndex[1] && m_pPuton!=NULL)
+			g_MusicManager->PlayMusic(m_pPuton, 1) ;
 		m_nState = m_nIndex[1] ;
 		m_bPuton = true ;
 	}

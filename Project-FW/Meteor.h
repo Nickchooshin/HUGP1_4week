@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects.h"
+#include <fmod.hpp>
 
 class CMeteor : public CObjects
 {
@@ -9,6 +10,8 @@ protected :
 
 	int m_nNowFrame ;
 	float m_fAnimationTime ;
+
+	FMOD::Sound *m_pMeteor ;
 
 public :
 	CMeteor() ;

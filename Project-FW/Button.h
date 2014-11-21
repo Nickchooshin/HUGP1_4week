@@ -15,7 +15,7 @@ private :
 	bool m_bVisible ;
 	CSprite *m_pSprite ;
 
-	FMOD::Sound *m_pClickDown, *m_pClickUp ;
+	FMOD::Sound *m_pClickDown, *m_pClickUp, *m_pPuton ;
 
 public :
 	CButton() ;
@@ -29,6 +29,9 @@ public :
 	void SetActivate(bool bActivate) ;
 	void SetVisible(bool bVisible) ;
 	void SetPutonActivate(bool bActivate) ;
+	void SetClickDownSound(char *filepath) ;
+	void SetClickUpSound(char *filepath) ;
+	void SetPutonSound(char *filepath) ;
 
 	void ClickState(int x, int y, bool bClick, bool bPress) ;
 	const bool BeClick() const ;

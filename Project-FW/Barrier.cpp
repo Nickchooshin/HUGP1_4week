@@ -2,6 +2,7 @@
 #include "Sprite.h"
 
 #include "D3dDevice.h"
+#include "MusicManager.h"
 
 CBarrier::CBarrier() : m_pActivate(NULL),
 					   m_pBarrierArea(0),
@@ -10,7 +11,8 @@ CBarrier::CBarrier() : m_pActivate(NULL),
 					   m_bActivate(false),
 					   m_nNowFrame(0), m_nNowFrame_A(0),
 					   m_fAnimationTime(0.0f), m_fAnimationTime_A(0.0f),
-					   m_State(BUILD), m_prevState(BUILD)
+					   m_State(BUILD), m_prevState(BUILD),
+					   m_pSBuild(NULL), m_pSActivate(NULL)
 {
 }
 CBarrier::~CBarrier()
@@ -30,6 +32,9 @@ void CBarrier::Init()
 	m_pActivate = new CSprite ;
 	m_pActivate->Init(80.0f, 80.0f, "Resource/Image/Game/Game_bar_activate.png") ;
 	m_pActivate->SetTextureUV(0.0f, 0.0f, 80.0f, 80.0f) ;
+
+	m_pSBuild = g_MusicManager->LoadMusic("Resource/Sound/SE_build.mp3", false, false) ;
+	m_pSActivate = g_MusicManager->LoadMusic("Resource/Sound/SE_activate.mp3", false, false) ;
 
 	InitScale() ;
 }
@@ -120,6 +125,8 @@ void CBarrier::Init(int Type)
 void CBarrier::Activate()
 {
 	m_bActivate = true ;
+
+	g_MusicManager->PlayMusic(m_pSActivate, 1) ;
 }
 
 const POSITION* CBarrier::GetBarrierArea() const
@@ -138,6 +145,11 @@ void CBarrier::Update()
 
 	if(m_State==WAIT && m_bActivate)
 		Animation_Activate() ;
+
+	//
+
+	if(m_State==BUILD && m_nNowFrame==0)
+		g_MusicManager->PlayMusic(m_pSBuild, 1) ;
 }
 
 void CBarrier::Animation()

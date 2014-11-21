@@ -49,6 +49,7 @@ public :
 	void Render_Result() ;
 private :
 	void DestroyPlanet() ;
+	void Deactivate() ;
 } ;
 
 #define g_MapManager CMapManager::GetInstance()

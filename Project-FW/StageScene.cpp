@@ -46,6 +46,8 @@ StageScene::~StageScene()
 	{
 		if(m_pStageNumber[i]!=NULL)
 			delete m_pStageNumber[i] ;
+		if(m_pStageButton[i]!=NULL)
+			g_ButtonManager->DeleteButton(m_pStageButton[i]) ;
 	}
 }
 
@@ -72,6 +74,8 @@ void StageScene::Init()
 	m_pNextButton->SetPosition(504.0f, WinHeight - 76.0f) ;
 	m_pNextButton->SetIndex(0, 1, 0, 0) ;
 	m_pNextButton->SetPutonActivate(true) ;
+	m_pNextButton->SetClickDownSound("Resource/Sound/SE_select.mp3") ;
+	m_pNextButton->SetPutonSound("Resource/Sound/SE_button.mp3") ;
 	g_ButtonManager->AddButton(m_pNextButton) ;
 
 	m_pPrevButton = new CButton ;
@@ -79,6 +83,8 @@ void StageScene::Init()
 	m_pPrevButton->SetPosition(72.0f, WinHeight - 76.0f) ;
 	m_pPrevButton->SetIndex(0, 1, 0, 0) ;
 	m_pPrevButton->SetPutonActivate(true) ;
+	m_pPrevButton->SetClickDownSound("Resource/Sound/SE_select.mp3") ;
+	m_pPrevButton->SetPutonSound("Resource/Sound/SE_button.mp3") ;
 	g_ButtonManager->AddButton(m_pPrevButton) ;
 
 	g_StageManager->LoadStageDat() ;
@@ -107,6 +113,8 @@ void StageScene::Init()
 		m_pStageButton[i]->SetIndex(1, 1, 1, 2) ;
 		m_pStageButton[i]->SetPosition(x, y) ;
 		m_pStageButton[i]->SetActivate(i<=OpenStageNum) ;
+		m_pStageButton[i]->SetClickDownSound("Resource/Sound/SE_unlock.mp3") ;
+		//m_pStageButton[i]->SetPutonSound("Resource/Sound/SE_button.mp3") ;
 		g_ButtonManager->AddButton(m_pStageButton[i]) ;
 
 		if(i==MapNumber)

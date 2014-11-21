@@ -59,6 +59,8 @@ void CGameObjectUI::Init()
 	m_pOperateButton->Init(170.0f, 60.0f, "Resource/Image/Game/UI/Game_btn_operate.png") ;
 	m_pOperateButton->SetPosition(WinWidth / 2.0f, WinHeight - 650.0f) ;
 	m_pOperateButton->SetIndex(0, 0, 1, 0) ;
+	m_pOperateButton->SetClickDownSound("Resource/Sound/SE_select.mp3") ;
+	m_pOperateButton->SetPutonSound("Resource/Sound/SE_button.mp3") ;
 	g_ButtonManager->AddButton(m_pOperateButton) ;
 
 	for(int i=0; i<4; i++)

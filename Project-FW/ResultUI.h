@@ -17,6 +17,7 @@ private :
 	int m_nState ;
 
 	FMOD::Sound *m_pBGM ;
+	FMOD::Sound *m_pSuccess, *m_pFail ;
 
 public :
 	CResultUI() ;
@@ -26,6 +27,7 @@ public :
 	void InitValue() ;
 
 	void SetResult(int Result) ;
+	void SetButtonActivate(bool bActivate) ;
 
 	void Update() ;
 

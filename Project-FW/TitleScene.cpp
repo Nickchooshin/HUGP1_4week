@@ -63,6 +63,8 @@ void TitleScene::Init()
 	m_pStartButton->SetPosition(288.0f, WinHeight - 570.0f) ;
 	m_pStartButton->SetIndex(0, 1, 0, 0) ;
 	m_pStartButton->SetPutonActivate(true) ;
+	m_pStartButton->SetClickDownSound("Resource/Sound/SE_select.mp3") ;
+	m_pStartButton->SetPutonSound("Resource/Sound/SE_button.mp3") ;
 	g_ButtonManager->AddButton(m_pStartButton) ;
 
 	m_pExitButton = new CButton ;
